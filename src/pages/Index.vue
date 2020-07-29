@@ -1,23 +1,41 @@
 <template>
   <q-page class="flex flex-center">
-    <div class="full-width text-center">
-      <img style="width:300px;" id="imagem" :src="img" />
+    <div class=" q-pt-lg">
+      <div class="full-width text-center ">
+        <img style="width:300px;" id="imagem" :src="img" />
+      </div>
+      <div class="full-width q-ma-md text-center" style="width:300px;">
+        <q-file outlined v-model="file">
+          <template v-slot:prepend> </template>
+        </q-file>
+        <br />
+        <q-btn
+          v-on:click="carregaImagem"
+          color="primary"
+          :class="$q.screen.width > 1000 ? '' : 'full-width'"
+          :style="$q.screen.width > 1000 ? 'width:49.5%; ' : 'margin-right:5px'"
+          >Carregar</q-btn
+        >
+
+        <q-btn
+          v-on:click="predict"
+          color="primary"
+          :class="$q.screen.width > 1000 ? '' : 'full-width'"
+          :style="$q.screen.width > 1000 ? 'width:49.5%;' : ''"
+          >Reconhecer</q-btn
+        >
+      </div>
+      <div class="textoPredito">{{ predictedValue }}</div>
     </div>
-    <div class="q-gutter-md text-center" style="width:300px;">
-      <q-file outlined v-model="file">
-        <template v-slot:prepend>
-          <q-icon name="attach_file"></q-icon>
-        </template>
-      </q-file>
-      <button v-on:click="carregaImagem">Carregar</button>
-    </div>
-    <div class="full-width text-center">
-      <button v-on:click="predict">Reconhecer Covid</button>
-    </div>
-    <div class="element">{{ predictedValue }}</div>
   </q-page>
 </template>
-
+<style>
+.textoPredito {
+  white-space: pre-wrap;
+  text-align: center;
+  height: 200px;
+}
+</style>
 <script>
 import * as tf from "@tensorflow/tfjs";
 import { fetch as fetchPolyfill } from "whatwg-fetch";
@@ -68,7 +86,18 @@ export default {
         alert(error);
       }
 
-      this.predictedValue = this.labels[valor.argMax(-1).dataSync()[0]];
+      //this.predictedValue = this.labels[valor.argMax(-1).dataSync()[0]];
+      let pcentCovid = (valor.dataSync()[0] * 100).toFixed(4);
+      let pcentNormal = (valor.dataSync()[1] * 100).toFixed(4);
+      this.predictedValue =
+        this.labels[valor.argMax(-1).dataSync()[0]] +
+        "\n\n" +
+        "covid-19: " +
+        pcentCovid +
+        "%\n" +
+        "normal: " +
+        pcentNormal +
+        "%\n";
     },
     carregaImagem() {
       this.predictedValue = "";
