@@ -12,7 +12,7 @@
         <q-btn
           v-on:click="carregaImagem"
           color="primary"
-          :class="$q.screen.width > 1000 ? '' : 'full-width'"
+          :class="$q.screen.width > 1000 ? '' : 'full-width q-mb-sm'"
           :style="$q.screen.width > 1000 ? 'width:49.5%; ' : 'margin-right:5px'"
           >Carregar</q-btn
         >
