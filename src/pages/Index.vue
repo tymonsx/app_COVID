@@ -5,23 +5,16 @@
         <img style="width:300px;" id="imagem" :src="img" />
       </div>
       <div class="full-width q-ma-md text-center" style="width:300px;">
-        <q-file outlined v-model="file">
+        <q-file
+          label="selecione uma radiografia"
+          outlined
+          v-model="file"
+          @input="carregaImagem"
+        >
           <template v-slot:prepend> </template>
         </q-file>
         <br />
-        <q-btn
-          v-on:click="carregaImagem"
-          color="primary"
-          :class="$q.screen.width > 1000 ? '' : 'full-width q-mb-sm'"
-          :style="$q.screen.width > 1000 ? 'width:49.5%; ' : 'margin-right:5px'"
-          >Carregar</q-btn
-        >
-
-        <q-btn
-          v-on:click="predict"
-          color="primary"
-          :class="$q.screen.width > 1000 ? '' : 'full-width'"
-          :style="$q.screen.width > 1000 ? 'width:49.5%;' : ''"
+        <q-btn v-on:click="predict" color="primary" class="full-width"
           >Reconhecer</q-btn
         >
       </div>
