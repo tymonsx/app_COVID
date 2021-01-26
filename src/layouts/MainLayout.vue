@@ -1,27 +1,41 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header reveal bordered class="bg-primary text-white">
+      <q-bar class="q-electron-drag electron-only">
+        <div>appCifar10</div>
+
+        <q-space></q-space>
+
+        <q-btn dense flat icon="minimize" @click="minimize"></q-btn>
+        <q-btn dense flat icon="crop_square" @click="maximize"></q-btn>
+        <q-btn dense flat icon="close" @click="closeApp"></q-btn>
+      </q-bar>
       <q-toolbar>
-        <q-toolbar-title>
-          <div style="width:50px; float:left; ">
-            <q-btn to="/" flat style="width:40px">
-              <img
-                style="display:block; margin-right:auto; margin: 5px; "
-                width="40px"
-                src="~assets/virus.svg"
-              />
-            </q-btn>
+        <q-toolbar-title
+          clickable
+          v-ripple
+          @click="$router.replace('/')"
+          active-class="my-menu-link"
+        >
+          <div style="width:80px; float:left; ">
+            <img
+              style="display:block; margin-right:auto;  "
+              width="70px"
+              src="~assets/virus.svg"
+            />
           </div>
           <div
-            style="width:50%; float:left; word-break: break-all; padding-top:10px;  "
+            style="width:50%; margin-left:50%; margin-right:50%; word-break: break-all; padding-top: 20px;"
           >
-            COVID RAIO-X
+            <span style="font-size:18px;">App Covid</span>
+            <br />
           </div>
         </q-toolbar-title>
 
-        <div><q-btn icon="info" to="/sobre" flat /></div>
+        <q-btn icon="info" to="/sobre" flat />
       </q-toolbar>
     </q-header>
+
     <q-footer elevated>
       <q-toolbar>
         <q-toolbar-title>
@@ -55,7 +69,32 @@
 </template>
 
 <script>
+import Vue from "vue";
+import Vuex from "vuex";
+Vue.use(Vuex);
 export default {
-  name: "MainLayout"
+  name: "MainLayout",
+  methods: {
+    minimize() {
+      if (process.env.MODE === "electron") {
+        this.$q.electron.remote.BrowserWindow.getFocusedWindow().minimize();
+      }
+    },
+    maximize() {
+      if (process.env.MODE === "electron") {
+        const win = this.$q.electron.remote.BrowserWindow.getFocusedWindow();
+        if (win.isMaximized()) {
+          win.unmaximize();
+        } else {
+          win.maximize();
+        }
+      }
+    },
+    closeApp() {
+      if (process.env.MODE === "electron") {
+        this.$q.electron.remote.BrowserWindow.getFocusedWindow().close();
+      }
+    }
+  }
 };
 </script>

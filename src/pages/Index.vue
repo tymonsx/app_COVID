@@ -18,7 +18,7 @@
           >Reconhecer</q-btn
         >
       </div>
-      <div class="textoPredito">{{ predictedValue }}</div>
+      <div class="textoPredito">{{ textoPredicao }}</div>
     </div>
   </q-page>
 </template>
@@ -37,7 +37,7 @@ export default {
   name: "PageIndex",
   data() {
     return {
-      predictedValue: "Clique em Reconhecer imagem",
+      textoPredicao: "Clique em Reconhecer imagem",
       valueToPredict: "",
       model: tf.sequential(),
       file: null,
@@ -53,20 +53,23 @@ export default {
     } catch (error) {
       alert(error);
     }
-    //URL.createObjectURL(file);
   },
   methods: {
     async carregar_modelo() {
-      this.predictedValue = "Carregando Modelo ...";
+      this.textoPredicao = "Carregando modelo ...";
       try {
         this.model = await tf.loadLayersModel("model/model.json");
       } catch (error) {
         alert(error);
       }
-      this.predictedValue = "Modelo Carregado";
+      this.textoPredicao = "Modelo carregado";
+    },
+    carregaImagem() {
+      this.textoPredicao = "Modelo carregado";
+      this.img = URL.createObjectURL(this.file);
     },
     predict() {
-      this.predictedValue = "Processando...";
+      this.textoPredicao = "Processando...";
       this.valueToPredict = document.getElementById("imagem");
       let arrInput = tf.browser.fromPixels(this.valueToPredict); //
       this.valueToPredict = tf.image
@@ -79,10 +82,9 @@ export default {
         alert(error);
       }
 
-      //this.predictedValue = this.labels[valor.argMax(-1).dataSync()[0]];
       let pcentCovid = (valor.dataSync()[0] * 100).toFixed(4);
       let pcentNormal = (valor.dataSync()[1] * 100).toFixed(4);
-      this.predictedValue =
+      this.textoPredicao =
         this.labels[valor.argMax(-1).dataSync()[0]] +
         "\n\n" +
         "covid-19: " +
@@ -91,11 +93,6 @@ export default {
         "normal: " +
         pcentNormal +
         "%\n";
-    },
-    carregaImagem() {
-      this.predictedValue = "";
-      this.img = URL.createObjectURL(this.file);
-      console.log(this.file);
     }
   }
 };
