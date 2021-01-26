@@ -71,9 +71,20 @@
 <script>
 import Vue from "vue";
 import Vuex from "vuex";
+import { Dialog } from "quasar";
 Vue.use(Vuex);
 export default {
   name: "MainLayout",
+  mounted() {
+    this.$q
+      .dialog({
+        title: "Atenção",
+        message:
+          "Esta é uma prova de conceito e não deve ser utilizada como diagnóstico. Em caso de sintomas, consulte um médico.",
+        class: "text-justify"
+      })
+      .onOk(() => {});
+  },
   methods: {
     minimize() {
       if (process.env.MODE === "electron") {

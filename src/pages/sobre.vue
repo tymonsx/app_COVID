@@ -108,6 +108,18 @@
                   >Manual da Marca</a
                 >
               </p>
+              <p>
+                As imagens utilizadas como base de dados foram disponibilizadas pelos desenvolvedores Monalisha Panda e Ashish Kushwaha e podem se acessadas através do link
+                  <a
+                  href="#"
+                  v-on:click="
+                    abrirLink(
+                      'https://drive.google.com/file/d/196D_HvmxYW6bJ0MlOvY5PgaEGJR0Oxsb/view'
+                    )
+                  "
+                  >Dataset</a
+                >
+              </p>
               </div>
             </q-card-section>
           </q-card>

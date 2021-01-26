@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <div class=" q-pt-lg">
-      <div class="full-width text-center ">
+      <div class="full-width text-center">
         <img style="width:300px;" id="imagem" :src="img" />
       </div>
       <div class="full-width q-ma-md text-center" style="width:300px;">
@@ -9,16 +9,16 @@
           label="selecione uma radiografia"
           outlined
           v-model="file"
-          @input="carregaImagem"
+          @input="carregarImagem"
         >
           <template v-slot:prepend> </template>
         </q-file>
         <br />
-        <q-btn v-on:click="predict" color="primary" class="full-width"
+        <q-btn v-on:click="predizerImagem" color="primary" class="full-width"
           >Reconhecer</q-btn
         >
       </div>
-      <div class="textoPredito">{{ textoPredicao }}</div>
+      <div class="textoPredito">{{ msgPredicao }}</div>
     </div>
   </q-page>
 </template>
@@ -37,8 +37,8 @@ export default {
   name: "PageIndex",
   data() {
     return {
-      textoPredicao: "Clique em Reconhecer imagem",
-      valueToPredict: "",
+      msgPredicao: "Clique em Reconhecer imagem",
+      valorPredito: "",
       model: tf.sequential(),
       file: null,
       img: covidExemplo,
@@ -49,42 +49,43 @@ export default {
   mounted() {
     try {
       window.fetch = fetchPolyfill;
-      this.carregar_modelo();
+      this.carregarModelo();
     } catch (error) {
       alert(error);
     }
   },
   methods: {
-    async carregar_modelo() {
-      this.textoPredicao = "Carregando modelo ...";
+    async carregarModelo() {
+      this.msgPredicao = "Carregando modelo ...";
       try {
         this.model = await tf.loadLayersModel("model/model.json");
       } catch (error) {
         alert(error);
       }
-      this.textoPredicao = "Modelo carregado";
+      this.msgPredicao = "Modelo carregado";
     },
-    carregaImagem() {
-      this.textoPredicao = "Modelo carregado";
+    carregarImagem() {
+      //this.msgPredicao = "Modelo carregado";
       this.img = URL.createObjectURL(this.file);
     },
-    predict() {
-      this.textoPredicao = "Processando...";
-      this.valueToPredict = document.getElementById("imagem");
-      let arrInput = tf.browser.fromPixels(this.valueToPredict); //
-      this.valueToPredict = tf.image
+    predizerImagem() {
+      this.msgPredicao = "Processando...";
+      this.valorPredito = document.getElementById("imagem");
+      let arrInput = tf.browser.fromPixels(this.valorPredito); //
+      this.valorPredito = tf.image
         .resizeBilinear(arrInput, [224, 224])
-        .reshape([1, 224, 224, 3]);
+        .reshape([1, 224, 224, 3])
+        .div(tf.scalar(255));
       let valor = "";
       try {
-        valor = this.model.predict(this.valueToPredict);
+        valor = this.model.predict(this.valorPredito);
       } catch (error) {
         alert(error);
       }
 
       let pcentCovid = (valor.dataSync()[0] * 100).toFixed(4);
       let pcentNormal = (valor.dataSync()[1] * 100).toFixed(4);
-      this.textoPredicao =
+      this.msgPredicao =
         this.labels[valor.argMax(-1).dataSync()[0]] +
         "\n\n" +
         "covid-19: " +
