@@ -111,9 +111,9 @@ module.exports = function(/* ctx */) {
       workboxPluginMode: "GenerateSW", // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: `raiox_covid`,
-        short_name: `raiox_covid`,
-        description: `classificação de raiox de tóraz entre possui covid ou normal`,
+        name: `appCovid`,
+        short_name: `appCovid`,
+        description: `classificação de raiox de tórax entre possui covid ou normal`,
         display: "standalone",
         orientation: "portrait",
         background_color: "#ffffff",

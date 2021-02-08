@@ -1,6 +1,6 @@
 {
-  "name": "dis.epm.br",
-  "displayName": "raiox_covid",
+  "name": "raioxcovid.dis.epm.br",
+  "displayName": "appCovid",
   "version": "1.0.0",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",

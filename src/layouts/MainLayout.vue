@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header reveal bordered class="bg-primary text-white">
       <q-bar class="q-electron-drag electron-only">
-        <div>appCifar10</div>
+        <div>appCovid</div>
 
         <q-space></q-space>
 
@@ -62,6 +62,22 @@
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
+    <q-dialog v-model="alertaInicial">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6 text-center">Atenção</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none text-justify">
+          Esta é uma prova de conceito e não deve ser utilizada como
+          diagnóstico. Em caso de sintomas, consulte um médico.
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -71,19 +87,16 @@
 <script>
 import Vue from "vue";
 import Vuex from "vuex";
-import { Dialog } from "quasar";
 Vue.use(Vuex);
 export default {
   name: "MainLayout",
+  data() {
+    return {
+      alertaInicial: false
+    };
+  },
   mounted() {
-    this.$q
-      .dialog({
-        title: "Atenção",
-        message:
-          "Esta é uma prova de conceito e não deve ser utilizada como diagnóstico. Em caso de sintomas, consulte um médico.",
-        class: "text-justify"
-      })
-      .onOk(() => {});
+    this.alertaInicial = true;
   },
   methods: {
     minimize() {

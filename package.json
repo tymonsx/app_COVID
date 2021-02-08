@@ -1,8 +1,8 @@
 {
-  "name": "app_covid",
+  "name": "appCovid",
   "version": "0.0.1",
-  "description": "classificação de raiox de tóraz entre possui covid ou normal",
-  "productName": "raiox_covid",
+  "description": "classificação de raiox de tórax entre possui covid ou normal",
+  "productName": "appCovid",
   "author": "Tymonsx <tymonsx@hotmail.com>",
   "private": true,
   "scripts": {

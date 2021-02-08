@@ -109,7 +109,7 @@
                 >
               </p>
               <p>
-                As imagens utilizadas como base de dados foram disponibilizadas pelos desenvolvedores Monalisha Panda e Ashish Kushwaha e podem se acessadas através do link
+                As imagens utilizadas como base de dados foram disponibilizadas pelos desenvolvedores Monalisha Panda e Ashish Kushwaha e podem ser acessadas através do link
                   <a
                   href="#"
                   v-on:click="
