@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header reveal bordered class="bg-primary text-white">
       <q-bar class="q-electron-drag electron-only">
-        <div>appCovid</div>
+        <div>App Covid</div>
 
         <q-space></q-space>
 
@@ -10,6 +10,7 @@
         <q-btn dense flat icon="crop_square" @click="maximize"></q-btn>
         <q-btn dense flat icon="close" @click="closeApp"></q-btn>
       </q-bar>
+
       <q-toolbar>
         <q-toolbar-title
           clickable
@@ -21,7 +22,7 @@
             <img
               style="display:block; margin-right:auto;  "
               width="70px"
-              src="~assets/virus.svg"
+              src="~assets/logo_virus.png"
             />
           </div>
           <div
@@ -35,7 +36,6 @@
         <q-btn icon="info" to="/sobre" flat />
       </q-toolbar>
     </q-header>
-
     <q-footer elevated>
       <q-toolbar>
         <q-toolbar-title>
@@ -43,7 +43,7 @@
             <img style="margin-top: 5px; " width="40px" src="~assets/epm.png" />
           </div>
           <div
-            class="desktop-only text-caption text-center float-left"
+            class="gt-sm text-caption text-center float-left"
             style="width:80%"
           >
             Rua Botucatu, 862-Térreo, Vila Clementino, São Paulo (SP). Cep:
@@ -83,11 +83,8 @@
     </q-page-container>
   </q-layout>
 </template>
-
 <script>
 import Vue from "vue";
-import Vuex from "vuex";
-Vue.use(Vuex);
 export default {
   name: "MainLayout",
   data() {
